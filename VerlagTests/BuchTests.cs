@@ -99,10 +99,28 @@ namespace VerlagTests
 		[DataRow("§")]
 		[DataRow("%")]
 		[ExpectedException(typeof(ArgumentException))]
-		public void Autor_UnerlaubteZeichenDuerfenNichtImNameSein(string unerlaubtesZeichen)
+		public void Autor_UnerlaubteZeichenDuerfenNichtImNameSein(string nichtsinvolleEingabe)
 		{
+			//Arrange
+			Random zufall = new Random();
+			string autor = "Barack Obama";
+			int zahl = zufall.Next(autor.Length);
+			autor.Insert(zahl, nichtsinvolleEingabe);
+
+
 			//Act
-			Buch b = new Buch(unerlaubtesZeichen, "titel");
+			Buch b = new Buch(autor, "titel");
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Autor_DarfNichtNullSein(string nul)
+		{
+			Buch b = new Buch("autor", "titel");
+
+
+		}
+
 	}
+
 }
